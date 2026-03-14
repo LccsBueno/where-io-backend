@@ -2,9 +2,7 @@ package analu.whereio.application.ports.in.local;
 
 import analu.whereio.application.model.Local;
 
-import java.util.List;
+public interface CadastrarLocalUsecase {
 
-public interface BuscarTodosLocalUsecase {
-
-    List<Local> execute();
+    Local execute(Local local);
 }

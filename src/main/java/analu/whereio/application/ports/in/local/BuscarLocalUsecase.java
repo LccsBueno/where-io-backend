@@ -1,10 +1,11 @@
 package analu.whereio.application.ports.in.local;
 
-import analu.whereio.adapters.out.persistence.entity.LocalEntity;
+import analu.whereio.application.model.Local;
 
 import java.util.List;
 
 public interface BuscarLocalUsecase {
 
-    List<LocalEntity> buscarLocal(String input);
+    List<Local> execute(String input);
+
 }

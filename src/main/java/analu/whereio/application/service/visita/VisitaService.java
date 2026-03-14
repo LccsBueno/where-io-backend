@@ -2,17 +2,17 @@ package analu.whereio.application.service.visita;
 
 import analu.whereio.adapters.out.persistence.entity.VisitaEntity;
 import analu.whereio.application.ports.in.VisitaServicePort;
-import analu.whereio.application.ports.out.RestauranteRepositoryPort;
+import analu.whereio.application.ports.out.LocalRepositoryPort;
 import analu.whereio.application.ports.out.VisitaRepositoryPort;
 import analu.whereio.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class VisitaService implements VisitaServicePort {
 
@@ -20,12 +20,12 @@ public class VisitaService implements VisitaServicePort {
     private final VisitaRepositoryPort visitaRepositoryPort;
 
     @Autowired
-    private final RestauranteRepositoryPort restauranteRepositoryPort;
+    private final LocalRepositoryPort localRepositoryPort;
 
     @Override
     public VisitaEntity adicionarVisita(VisitaEntity visitaEntity, String id) {
 
-        if(isNull(restauranteRepositoryPort.findById(id))){;
+        if(isNull(localRepositoryPort.buscarPorIdLocal(id))){;
             throw new BusinessException("Não existe restaurante com esse id", HttpStatus.NOT_FOUND);
         }
 

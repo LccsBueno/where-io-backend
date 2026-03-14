@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>analu</groupId>
-	<artifactId>restaurantes-api</artifactId>
+	<artifactId>where-io</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>restaurantes-api</name>
 	<description>API para os restaurantes do casal mais lindo de pirituba</description>

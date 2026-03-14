@@ -1,12 +1,11 @@
 package analu.whereio.application.service.local;
 
 import analu.whereio.adapters.out.external.geocoding.record.LatitudeLongitudeRecord;
-import analu.whereio.adapters.out.persistence.entity.LocalEntity;
 import analu.whereio.application.mapper.LocalServiceMapper;
 import analu.whereio.application.model.Local;
-import analu.whereio.application.ports.in.local.AdicionarLocalUsecase;
+import analu.whereio.application.ports.in.local.CadastrarLocalUsecase;
 import analu.whereio.application.ports.out.LatitudeLongitudeInterfacePort;
-import analu.whereio.application.ports.out.RestauranteRepositoryPort;
+import analu.whereio.application.ports.out.LocalRepositoryPort;
 import analu.whereio.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,17 +17,17 @@ import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
-public class AdicionarLocalUsecaseImpl implements AdicionarLocalUsecase {
+public class CadastrarLocalUsecaseImpl implements CadastrarLocalUsecase {
 
-    private final RestauranteRepositoryPort restaurantesRepositoryPort;
+    private final LocalRepositoryPort localRepositoryPort;
     private final LatitudeLongitudeInterfacePort latitudeLongitudePort;
     private final LocalServiceMapper localServiceMapper;
 //    private final GeocodingPort geocodingPort;
 
     @Override
-    public LocalEntity adicionarRestaurante(Local local) {
+    public Local execute(Local local) {
 
-        if(!isNull(restaurantesRepositoryPort.findByNome(local.getNome()))){
+        if(!isNull(localRepositoryPort.buscarPorNomeLocal(local.getNome()))){
             throw new BusinessException("Restaurante já cadastrado", HttpStatus.UNPROCESSABLE_CONTENT);
         }
 
@@ -43,6 +42,6 @@ public class AdicionarLocalUsecaseImpl implements AdicionarLocalUsecase {
             throw new BusinessException("Restaurante não foi encontrado", HttpStatus.NOT_FOUND);
         }
 
-        return restaurantesRepositoryPort.save(localServiceMapper.toEntity(local));
+        return localRepositoryPort.cadastrarLocal(local);
     }
 }

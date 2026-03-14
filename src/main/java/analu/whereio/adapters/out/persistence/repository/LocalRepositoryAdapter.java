@@ -1,51 +1,52 @@
 package analu.whereio.adapters.out.persistence.repository;
 
 import analu.whereio.adapters.out.persistence.entity.LocalEntity;
-import analu.whereio.application.ports.out.RestauranteRepositoryPort;
+import analu.whereio.adapters.out.persistence.mapper.LocalPersistenceMapper;
+import analu.whereio.application.model.Local;
+import analu.whereio.application.ports.out.LocalRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class LocalRepositoryAdapter implements RestauranteRepositoryPort {
+public class LocalRepositoryAdapter implements LocalRepositoryPort {
 
-    @Autowired
-    SprintDataRepository repository;
+    private final SprintDataRepository repository;
+    private final LocalPersistenceMapper mapper;
+
 
     @Override
-    public LocalEntity cadastrarLocal(LocalEntity localEntity) {
-        return repository.save(localEntity);
+    public Local cadastrarLocal(Local local) {
+        return mapper.toDomain(repository.save(mapper.toEntity(local)));
     }
 
     @Override
-    public LocalEntity buscarPorNomeLocal(String nome) {
-        return repository.findByNome(nome);
+    public Local buscarPorNomeLocal(String nome) {
+        return mapper.toDomain(repository.findByNome(nome));
     }
 
     @Override
-    public List<LocalEntity> buscarTodosLocal() {
-        return repository.findAll();
+    public List<Local> buscarTodosLocal() {
+        return repository
+                .findAll()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 
     @Override
-    public LocalEntity buscarPorIdLocal(String id) {
-        return repository.findById(id).orElse(null);
+    public Local buscarPorIdLocal(String id) {
+        return mapper.toDomain(repository.findById(id).orElse(null));
     }
 
     @Override
-    public LocalEntity atualizarLocal(LocalEntity localEntity, String id) {
-        return repository.findById(id)
-                .map(restaurante -> {
-                    restaurante.setNome(localEntity.getNome());
-                    restaurante.setEndereco(localEntity.getEndereco());
-                    restaurante.setLatitude(localEntity.getLatitude());
-                    restaurante.setLongitude(localEntity.getLongitude());
-                    return repository.save(restaurante);
-                })
-                .orElse(null);
+    public void atualizarLocal(Local local, String id) {
+
+        LocalEntity localEntity = mapper.toEntity(local);
+        localEntity.setId(id);
+        repository.save(localEntity);
     }
 
 
