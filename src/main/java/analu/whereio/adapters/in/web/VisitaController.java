@@ -1,12 +1,10 @@
 package analu.whereio.adapters.in.web;
 
+import analu.whereio.adapters.in.web.converter.VisitaConverter;
 import analu.whereio.adapters.in.web.dto.request.VisitaDtoRequest;
 import analu.whereio.adapters.in.web.dto.response.VisitaDtoResponse;
-import analu.whereio.adapters.out.persistence.entity.VisitaEntity;
-import analu.whereio.adapters.out.persistence.mapper.VisitaMapper;
-import analu.whereio.application.ports.in.VisitaServicePort;
+import analu.whereio.application.ports.in.visita.CadastrarVisitaUsecase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,18 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VisitaController {
 
-    @Autowired
-    private final VisitaServicePort VisitaServicePort;
+    private final CadastrarVisitaUsecase cadastrarVisitaUsecase;
 
-    @Autowired
-    private final VisitaMapper visitaMapper;
+    private final VisitaConverter mapper;
 
-    @PostMapping("/{id}")
-    public ResponseEntity<VisitaDtoResponse> adicionarVisita(@PathVariable String id, @RequestBody VisitaDtoRequest visitaDtoRequest) {
-        VisitaEntity teste = visitaMapper.requestToEntity(visitaDtoRequest);
-        VisitaServicePort.adicionarVisita(teste, id);
+    @PostMapping("/{idLocal}")
+    public ResponseEntity<VisitaDtoResponse> adicionarVisita(@PathVariable String idLocal, @RequestBody VisitaDtoRequest visitaDtoRequest) {
+
+        cadastrarVisitaUsecase.execute(mapper.toDomain(visitaDtoRequest), idLocal);
         return ResponseEntity.status(201).build();
     }
-
 
 }

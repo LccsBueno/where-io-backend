@@ -1,28 +1,28 @@
 package analu.whereio.adapters.out.persistence.repository;
 
-import analu.whereio.adapters.out.persistence.entity.VisitaEntity;
+import analu.whereio.adapters.out.persistence.mapper.VisitaPersistanceMapper;
+import analu.whereio.application.model.Visita;
 import analu.whereio.application.ports.out.VisitaRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class VisitaRepositoryAdapter implements VisitaRepositoryPort {
 
-    @Autowired
-    SprintDataRepository repository;
+    private final SprintDataRepository repository;
+    private final VisitaPersistanceMapper mapper;
 
     @Override
-    public VisitaEntity adicionarVisita(VisitaEntity visitaEntity, String id) {
+    public String adicionarVisita(Visita visita, String idLocal) {
 
-        repository.findById(id)
+        return repository
+                .findById(idLocal)
                 .map(restaurante -> {
-                    restaurante.getVisitas().add(visitaEntity);
+                    restaurante.getVisitas().add(mapper.toEntity(visita));
                     return repository.save(restaurante);
-        });
-
-        return visitaEntity;
+                })
+                .get().getId();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VisitaRepositoryAdapter implements VisitaRepositoryPort {
     }
 
     @Override
-    public VisitaEntity atualizarVisita(VisitaEntity visitaEntity, String id) {
+    public Visita atualizarVisita(Visita visita, String idVisita) {
         return null;
     }
 }

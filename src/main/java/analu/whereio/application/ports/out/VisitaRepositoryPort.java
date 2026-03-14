@@ -1,10 +1,10 @@
 package analu.whereio.application.ports.out;
 
-import analu.whereio.adapters.out.persistence.entity.VisitaEntity;
+import analu.whereio.application.model.Visita;
 
 public interface VisitaRepositoryPort {
 
-    VisitaEntity adicionarVisita(VisitaEntity visitaEntity, String id);
+    String adicionarVisita(Visita visita, String idLocal);
     void removerVisita(String id);
-    VisitaEntity atualizarVisita(VisitaEntity visitaEntity, String id);
+    Visita atualizarVisita(Visita visita, String idVisita);
 }
