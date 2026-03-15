@@ -3,10 +3,7 @@ package analu.whereio.adapters.in.web;
 import analu.whereio.adapters.in.web.converter.LocalConverter;
 import analu.whereio.adapters.in.web.dto.request.LocalDtoRequest;
 import analu.whereio.adapters.in.web.dto.response.LocalDtoResponse;
-import analu.whereio.application.ports.in.local.AtualizarLocalUsecase;
-import analu.whereio.application.ports.in.local.BuscarLocalUsecase;
-import analu.whereio.application.ports.in.local.BuscarTodosLocalUsecase;
-import analu.whereio.application.ports.in.local.CadastrarLocalUsecase;
+import analu.whereio.application.ports.in.local.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,7 @@ public class LocalController {
     private final AtualizarLocalUsecase atualizarLocalUsecase;
     private final BuscarLocalUsecase buscarLocalUsecase;
     private final BuscarTodosLocalUsecase buscarTodosLocalUsecase;
+    private final RemoverLocalUsecase removerLocalUsecase;
 
     private final LocalConverter mapper;
 
@@ -36,7 +34,8 @@ public class LocalController {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deletarLocal(@PathVariable String id) {
-
+        removerLocalUsecase.execute(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/buscar/{input}")
