@@ -39,6 +39,11 @@ public class AtualizarLocalUsecaseImpl implements AtualizarLocalUsecase {
             throw new BusinessException("Local não foi encontrado", HttpStatus.NOT_FOUND);
         }
 
-        localRepositoryPort.cadastrarLocal(local);
+        try{
+            localRepositoryPort.atualizarLocal(local);
+
+        }catch (Exception e){
+            throw new BusinessException("Ocorreu um erro ao atualizar o local", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

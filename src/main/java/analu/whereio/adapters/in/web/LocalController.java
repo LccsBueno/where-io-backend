@@ -34,6 +34,11 @@ public class LocalController {
         return ResponseEntity.status(HttpStatus.OK).body(localDtoResponse.getId());
     }
 
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deletarLocal(@PathVariable String id) {
+
+    }
+
     @GetMapping("/buscar/{input}")
     ResponseEntity<List<LocalDtoResponse>> buscarLocal(@PathVariable String input) {
         List<LocalDtoResponse> listaLocalDtoResponse = buscarLocalUsecase

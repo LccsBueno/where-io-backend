@@ -25,6 +25,11 @@ public class CadastrarVisitaUsecaseImpl implements CadastrarVisitaUsecase {
             throw new BusinessException("Não existe restaurante com esse id", HttpStatus.NOT_FOUND);
         }
 
-        return visitaRepositoryPort.adicionarVisita(visita, idLocal);
+        try{
+            return visitaRepositoryPort.adicionarVisita(visita, idLocal);
+
+        } catch (Exception e) {
+            throw new BusinessException("Ocorreu um erro ao cadastrar a visita", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

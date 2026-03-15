@@ -1,6 +1,7 @@
-package analu.whereio.adapters.out.persistence.repository;
+package analu.whereio.adapters.out.persistence.impl;
 
 import analu.whereio.adapters.out.persistence.mapper.VisitaPersistanceMapper;
+import analu.whereio.adapters.out.persistence.repository.SprintDataRepository;
 import analu.whereio.application.model.Visita;
 import analu.whereio.application.ports.out.VisitaRepositoryPort;
 import lombok.RequiredArgsConstructor;

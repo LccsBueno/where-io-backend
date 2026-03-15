@@ -1,7 +1,8 @@
-package analu.whereio.adapters.out.persistence.repository;
+package analu.whereio.adapters.out.persistence.impl;
 
 import analu.whereio.adapters.out.persistence.entity.LocalEntity;
 import analu.whereio.adapters.out.persistence.mapper.LocalPersistenceMapper;
+import analu.whereio.adapters.out.persistence.repository.SprintDataRepository;
 import analu.whereio.application.model.Local;
 import analu.whereio.application.ports.out.LocalRepositoryPort;
 import lombok.RequiredArgsConstructor;
@@ -42,12 +43,14 @@ public class LocalRepositoryAdapter implements LocalRepositoryPort {
     }
 
     @Override
-    public void atualizarLocal(Local local, String id) {
+    public void atualizarLocal(Local local) {
 
         LocalEntity localEntity = mapper.toEntity(local);
-        localEntity.setId(id);
         repository.save(localEntity);
     }
 
-
+    @Override
+    public void removerLocalPorId(String id) {
+        repository.deleteById(id);
+    }
 }

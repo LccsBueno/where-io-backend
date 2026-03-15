@@ -14,7 +14,7 @@ public interface LocalRepositoryPort {
 
         Local buscarPorIdLocal(String id);
 
-        void atualizarLocal(Local local, String id);
+        void atualizarLocal(Local local);
 
-
+        void removerLocalPorId(String id);
 }
