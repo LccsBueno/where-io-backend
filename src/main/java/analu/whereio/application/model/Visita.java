@@ -14,5 +14,6 @@ public class Visita {
     private LocalDate dataVisita;
     private int avaliacao;
     private String comentario;
+    private String idLocal;
 
 }

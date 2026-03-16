@@ -2,7 +2,7 @@ package analu.whereio.adapters.out.persistence.impl;
 
 import analu.whereio.adapters.out.persistence.entity.LocalEntity;
 import analu.whereio.adapters.out.persistence.mapper.LocalPersistenceMapper;
-import analu.whereio.adapters.out.persistence.repository.SprintDataRepository;
+import analu.whereio.adapters.out.persistence.repository.LocalRepository;
 import analu.whereio.application.model.Local;
 import analu.whereio.application.ports.out.LocalRepositoryPort;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LocalRepositoryAdapter implements LocalRepositoryPort {
 
-    private final SprintDataRepository repository;
+    private final LocalRepository repository;
     private final LocalPersistenceMapper mapper;
 
 

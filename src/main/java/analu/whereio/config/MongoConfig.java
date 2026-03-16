@@ -22,7 +22,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "restaurantes_db";
+        return "whereio_db";
     }
 
     @Override

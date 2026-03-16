@@ -28,8 +28,6 @@ public class CadastrarLocalUsecaseImpl implements CadastrarLocalUsecase {
             throw new BusinessException("Local já foi cadastrado", HttpStatus.UNPROCESSABLE_CONTENT);
         }
 
-        local.setJaVisitou(false);
-
         try{
             LatitudeLongitudeRecord record = latitudeLongitudePort.ConverterEnderecoParaCoordenadas(local.getEndereco().toString());
             local.setLatitude(record.latitude());

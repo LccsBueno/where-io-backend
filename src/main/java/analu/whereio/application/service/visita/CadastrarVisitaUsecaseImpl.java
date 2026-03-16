@@ -19,14 +19,14 @@ public class CadastrarVisitaUsecaseImpl implements CadastrarVisitaUsecase {
     private final VisitaRepositoryPort visitaRepositoryPort;
 
     @Override
-    public String execute(Visita visita, String idLocal) {
+    public String execute(Visita visita) {
 
-        if(isNull(localRepositoryPort.buscarPorIdLocal(idLocal))){;
+        if(isNull(localRepositoryPort.buscarPorIdLocal(visita.getIdLocal()))){;
             throw new BusinessException("Não existe restaurante com esse id", HttpStatus.NOT_FOUND);
         }
 
         try{
-            return visitaRepositoryPort.adicionarVisita(visita, idLocal);
+            return visitaRepositoryPort.adicionarVisita(visita);
 
         } catch (Exception e) {
             throw new BusinessException("Ocorreu um erro ao cadastrar a visita", HttpStatus.INTERNAL_SERVER_ERROR);

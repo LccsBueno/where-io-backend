@@ -6,7 +6,7 @@ import analu.whereio.application.model.Local;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", uses = VisitaConverter.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LocalConverter {
 
     Local toDomain(LocalDtoRequest localDtoRequest);

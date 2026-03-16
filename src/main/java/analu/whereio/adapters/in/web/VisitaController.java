@@ -2,9 +2,12 @@ package analu.whereio.adapters.in.web;
 
 import analu.whereio.adapters.in.web.converter.VisitaConverter;
 import analu.whereio.adapters.in.web.dto.request.VisitaDtoRequest;
-import analu.whereio.adapters.in.web.dto.response.VisitaDtoResponse;
+import analu.whereio.application.ports.in.visita.AtualizarVisitaUsecase;
 import analu.whereio.application.ports.in.visita.CadastrarVisitaUsecase;
+import analu.whereio.application.ports.in.visita.RemoverVisitaUsecase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +17,26 @@ import org.springframework.web.bind.annotation.*;
 public class VisitaController {
 
     private final CadastrarVisitaUsecase cadastrarVisitaUsecase;
+    private final AtualizarVisitaUsecase atualizarVisitaUsecase;
+    private final RemoverVisitaUsecase removerVisitaUsecase;
 
     private final VisitaConverter mapper;
 
-    @PostMapping("/{idLocal}")
-    public ResponseEntity<VisitaDtoResponse> adicionarVisita(@PathVariable String idLocal, @RequestBody VisitaDtoRequest visitaDtoRequest) {
+    @PostMapping
+    public ResponseEntity<String> adicionarVisita(@Valid @RequestBody VisitaDtoRequest visitaDtoRequest) {
+        return ResponseEntity.status(201).body(cadastrarVisitaUsecase.execute(mapper.toDomain(visitaDtoRequest)));
+    }
 
-        cadastrarVisitaUsecase.execute(mapper.toDomain(visitaDtoRequest), idLocal);
-        return ResponseEntity.status(201).build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removerVisita(@PathVariable String id) {
+        removerVisitaUsecase.execute(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> atualizarVisita(@PathVariable String id, @Valid @RequestBody VisitaDtoRequest visitaDtoRequest) {
+        atualizarVisitaUsecase.execute(id, mapper.toDomain(visitaDtoRequest));
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

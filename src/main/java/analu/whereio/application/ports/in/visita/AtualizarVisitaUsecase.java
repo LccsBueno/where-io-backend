@@ -2,7 +2,7 @@ package analu.whereio.application.ports.in.visita;
 
 import analu.whereio.application.model.Visita;
 
-public interface CadastrarVisitaUsecase {
+public interface AtualizarVisitaUsecase {
 
-    String execute(Visita visita);
+    void execute(String idVisita, Visita visita);
 }
